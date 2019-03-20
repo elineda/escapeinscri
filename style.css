@@ -1,0 +1,7 @@
+.indent{
+    display: inline-flex;
+
+}
+.indent>p:last-child{
+    margin-left: auto;
+}
