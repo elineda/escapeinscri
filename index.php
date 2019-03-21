@@ -5,7 +5,7 @@
  * Date: 3/18/19
  * Time: 11:02 AM
  */
-
+session_start();
 
 if (isset($_GET['w'])){
     include __DIR__ . '/src/controller/'.$_GET['w'].'.php';

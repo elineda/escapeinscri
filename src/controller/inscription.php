@@ -19,11 +19,18 @@ if (isset($_POST['nom'])&&isset($_POST['prenom'])&&isset($_POST['email'])&&isset
 
     $inscription=new Inscription();
     $go=$inscription->add($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['formation']);
+    if ($go){
+        $index= new IndexView('success');
+        $index->addBody('success');
+        $index->showPage();
 
+    }
+    else{
+        $index=new IndexView('Erreur');
+        $index->addBody('erreur');
+        $index->showPage();
+    }
 
-    $index= new IndexView('success');
-    $index->addBody('success');
-    $index->showPage();
 
 
 }

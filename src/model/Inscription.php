@@ -21,17 +21,49 @@ class Inscription extends DbConnect
      * @return array
      * on inscrit les joueurs
      */
-    public function add($nom,$prenom,$email,$formation){
-        $bdd=$this->dbConnect()
-            or die('connection impossible');
-        $req=$bdd->prepare('INSERT INTO student (nom, prenom, email, formation)'.'values (:nom,:prenom,:email,:formation)');
-        $req->execute(array('nom'=>''.$nom,
-                            'prenom'=>''.$prenom,
-                            'email'=>''.$email,
-                            'formation'=>''.$formation,
-                            ));
 
-        return $req->errorInfo();
+    public function index(){
+        $bdd=$this->dbConnect()
+            or die('boum');
+        $req=$bdd->query('select val from parametre where para="ouvert"');
+        $row=$req->fetch();
+        return $row['val'];
+    }
+    public function connect($mail,$password){
+        $bdd=$this->dbConnect()
+            or die('kaboum');
+        $req=$bdd->prepare('select * from admin where mail=:email');
+        $req->execute(array("email"=>$mail));
+        $row=$req->fetch();
+        return $row;
+    }
+    public function takeone($email){
+        $bdd=$this->dbConnect()
+            or die('naaaaan');
+        $reqs=$bdd->prepare('select email from student where email=:email');
+        $reqs->execute(array("email"=>$email));
+        $row=$reqs->fetch();
+        return $row;
+    }
+
+    public function add($nom,$prenom,$email,$formation){
+        $verif=$this->takeone($email);
+        $verif=$verif['email'];
+        if ($verif==$email){
+            return false;
+        }
+        else {
+            $bdd = $this->dbConnect()
+            or die('connection impossible');
+            $req = $bdd->prepare('INSERT INTO student (nom, prenom, email, formation)' . 'values (:nom,:prenom,:email,:formation)');
+            $req->execute(array('nom' => '' . $nom,
+                'prenom' => '' . $prenom,
+                'email' => '' . $email,
+                'formation' => '' . $formation,
+            ));
+
+            return true;
+        }
     }
 
     /**
