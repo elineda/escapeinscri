@@ -22,7 +22,7 @@
                 <OPTION>L3INFO
                 <OPTION>M1DC
         </SELECT><br>
-        <input  class="alert alert-dark" style="display: block; margin: 0 auto"  type="submit" name="go">
+        <input  class="alert alert-dark" style="display: block; margin: 0 auto"  type="submit" value="Inscription" name="go">
 
 
     </form>
